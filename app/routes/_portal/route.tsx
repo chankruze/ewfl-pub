@@ -4,6 +4,7 @@ import { json, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { SITE_TITLE } from "~/consts";
 import { getProfileByUserId } from "~/controllers/profile.server";
+import { ModalProvider } from "~/providers/modal-provider";
 import { BottomNavList } from "./bottom-nav-list";
 import { NavList } from "./nav-list";
 import { UserProfileBox } from "./user-profile-box";
@@ -49,7 +50,7 @@ export default function PanelLayout() {
       </aside>
       {/* outlet */}
       <main className="flex-1 overflow-y-auto">
-        {/* <DialogProvider /> */}
+        <ModalProvider />
         <Outlet />
         {/* <div className="flex w-full h-full items-center justify-center">
           <div className="font-outfit text-6xl font-medium">
