@@ -13,6 +13,7 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import stylesheet from "~/globals.css";
+import { ModalProvider } from "./providers/modal-provider";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -56,6 +57,7 @@ const App = () => {
         <Links />
       </head>
       <body>
+        <ModalProvider />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

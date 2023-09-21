@@ -9,3 +9,87 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model UserProfile {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String         @unique
+  name          String
+  email         String
+  phone         String?
+  avatar        String
+  isReferred    Boolean        @default(false)
+  referredBy    String?
+  referralCount Int            @default(0)
+  referralCode  String         @unique
+  // wallet relation (one to one) - mandatory
+  wallet        UserWallet     @relation(fields: [walletId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  walletId      String         @unique @map("wallet") @db.ObjectId
+  RecyleTicket  RecyleTicket[]
+
+  @@map("user_profiles")
+}
+
+model UserWallet {
+  id           String            @id @default(auto()) @map("_id") @db.ObjectId
+  currency     Currency          @default(INR)
+  earned       Float             @default(0)
+  withdrawn    Float             @default(0)
+  referrals    Float             @default(0)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  // no profile relation scalar - must be optional
+  userProfile  UserProfile?
+  // no transactions relation array - must be optional
+  transactions UserTransaction[]
+
+  @@map("user_wallets")
+}
+
+enum Currency {
+  INR
+  USD
+  EUR
+}
+
+enum UserTransactionType {
+  REWARD
+  WITHDRAW
+  REFERRAL
+}
+
+model UserTransaction {
+  id          String              @id @default(auto()) @map("_id") @db.ObjectId
+  type        UserTransactionType
+  amount      Float
+  description String?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  // wallet relation scalar - mandatory
+  wallet      UserWallet          @relation(fields: [walletId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  walletId    String              @map("wallet") @db.ObjectId
+
+  @@map("user_transactions")
+}
+
+enum RecyleTicketStatus {
+  OPEN
+  REJECTED
+  APPROVED
+  DONE
+}
+
+model RecyleTicket {
+  id            String             @id @default(auto()) @map("_id") @db.ObjectId
+  tktId         String             @unique
+  status        RecyleTicketStatus @default(OPEN)
+  title         String
+  description   String             @default("")
+  images        String[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  // profile relation
+  userProfile   UserProfile?       @relation(fields: [userProfileId], references: [id])
+  userProfileId String?            @map("userProfile") @db.ObjectId
+
+  @@map("recycle_tickets")
+}
