@@ -1,3 +1,4 @@
+import { UserButton } from "@clerk/remix";
 import { BottomNavItem } from "./bottom-nav-item";
 import { navLinks } from "./nav-data";
 
@@ -7,6 +8,7 @@ export const BottomNavList = () => {
       {navLinks.map(({ to, icon }) => (
         <BottomNavItem key={`nav-${to}`} to={to} icon={icon} />
       ))}
+      <UserButton afterSignOutUrl="/" />
     </ul>
   );
 };

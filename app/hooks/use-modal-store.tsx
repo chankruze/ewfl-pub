@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type ModalType = "locationAccess";
+export type ModalType = "createTicket";
 
 interface ModalData {
   role?: string;

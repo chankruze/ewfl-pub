@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CreateTicketModal } from "~/modals/create-ticket-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -11,5 +12,9 @@ export const ModalProvider = () => {
     return null;
   }
 
-  return <></>;
+  return (
+    <>
+      <CreateTicketModal />
+    </>
+  );
 };

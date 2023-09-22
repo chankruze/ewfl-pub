@@ -1,12 +1,14 @@
 import { NavLink } from "@remix-run/react";
+import type { LucideIcon } from "lucide-react";
 import { cn } from "~/lib/utils";
 
 export type NavItemProps = {
   to: string;
   label: string;
+  icon: LucideIcon;
 };
 
-export const NavItem = ({ to, label }: NavItemProps) => {
+export const NavItem = ({ to, label, icon: Icon }: NavItemProps) => {
   return (
     <li className="flex">
       <NavLink
@@ -22,6 +24,7 @@ export const NavItem = ({ to, label }: NavItemProps) => {
           )
         }
       >
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
         <span>{label}</span>
       </NavLink>
     </li>

@@ -84,7 +84,7 @@ model RecyleTicket {
   status        RecyleTicketStatus @default(OPEN)
   title         String
   description   String             @default("")
-  images        String[]
+  image         String
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
   // profile relation
