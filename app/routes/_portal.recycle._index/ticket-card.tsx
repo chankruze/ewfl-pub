@@ -14,16 +14,19 @@ type TicketCardProps = React.ComponentProps<typeof Card> & {
 
 export const TicketCard = ({ className, data, ...props }: TicketCardProps) => {
   return (
-    <Link to={data.id} className="h-full">
-      <Card className={cn("h-full lg:w-[380px]", className)} {...props}>
+    <Link to={data.id} className="h-full w-full">
+      <Card className={cn("h-full w-full lg:w-[380px]", className)} {...props}>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <span className="text-lg">{data.tktId}</span>
+            <span className="text-sm">{data.tktId}</span>
             <Badge>{data.status}</Badge>
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-4 font-roboto">
-          <div className="w-full h-48 bg-stone-100 flex items-center justify-center">
+        <CardContent className="space-y-3 font-roboto">
+          <h1 className="line-clamp-2 text-xl font-medium font-outfit">
+            {data.title}
+          </h1>
+          <div className="w-full h-48 bg-stone-50 flex items-center justify-center">
             <img
               src={data.image}
               alt={data.tktId}

@@ -41,6 +41,7 @@ export const CreateTicketModal = () => {
           className="grid gap-4 py-4"
           method="post"
           action="/recycle"
+          encType="multipart/form-data"
         >
           <div className="space-y-1">
             <Label htmlFor="title" className="text-right">

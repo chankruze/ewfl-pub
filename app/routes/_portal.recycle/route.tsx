@@ -1,6 +1,10 @@
 import { getAuth } from "@clerk/remix/ssr.server";
 import type { ActionFunctionArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import {
+  json,
+  redirect,
+  unstable_parseMultipartFormData,
+} from "@remix-run/node";
 import type { MetaArgs } from "@remix-run/react";
 import { Outlet, useNavigate } from "@remix-run/react";
 import { ChevronLeft } from "lucide-react";
@@ -9,6 +13,7 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import { SITE_TITLE } from "~/consts";
 import { createRecycleTicket } from "~/controllers/recycle.server";
 import { useModal } from "~/hooks/use-modal-store";
+import { uploadHandler } from "~/lib/upload.server";
 import { LocationWidget } from "./location-widget";
 
 export const meta = (args: MetaArgs) => {
@@ -26,30 +31,41 @@ export const meta = (args: MetaArgs) => {
 };
 
 export const action = async (args: ActionFunctionArgs) => {
-  const { userId } = await getAuth(args);
+  try {
+    const { userId } = await getAuth(args);
 
-  if (!userId) {
-    return redirect("/sign-in");
-  }
-
-  const formData = await args.request.formData();
-  const __action = formData.get("__action");
-
-  switch (__action) {
-    case "create": {
-      const _ticket = await createRecycleTicket(formData, userId);
-
-      if (_ticket.id) return json({ ticket: _ticket, ok: true });
-
-      return json({
-        ok: false,
-        error: _ticket.error,
-      });
+    if (!userId) {
+      return redirect("/sign-in");
     }
 
-    default: {
-      throw new Error("Unknown action");
+    const formData = await unstable_parseMultipartFormData(
+      args.request,
+      uploadHandler
+    );
+
+    const __action = formData.get("__action");
+
+    switch (__action) {
+      case "create": {
+        const _ticket = await createRecycleTicket(formData, userId);
+
+        if (_ticket.id) return json({ ticket: _ticket, ok: true });
+
+        return json({
+          ok: false,
+          error: _ticket.error,
+        });
+      }
+
+      default: {
+        throw new Error("Unknown action");
+      }
     }
+  } catch (e) {
+    console.error(e);
+    throw new Response("Something went wrong", {
+      status: 500,
+    });
   }
 };
 

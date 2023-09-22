@@ -1,10 +1,25 @@
 import {
-    unstable_composeUploadHandlers,
-    unstable_createMemoryUploadHandler,
-    writeAsyncIterableToWritable,
+  unstable_composeUploadHandlers,
+  unstable_createMemoryUploadHandler,
+  writeAsyncIterableToWritable,
 } from "@remix-run/node";
-import type { UploadApiErrorResponse, UploadApiResponse } from "cloudinary";
+import type { UploadApiResponse } from "cloudinary";
 import { v2 as cloudinary } from "cloudinary";
+// import invariant from "tiny-invariant";
+
+// invariant(
+//   process.env.CLOUDINARY_CLOUD_NAME,
+//   "CLOUDINARY_CLOUD_NAME not set in .env"
+// );
+// invariant(process.env.CLOUDINARY_API_KEY, "CLOUDINARY_API_KEY not set in .env");
+// invariant(
+//   process.env.CLOUDINARY_API_SECRET,
+//   "CLOUDINARY_API_SECRET not set in .env"
+// );
+// invariant(
+//   process.env.CLOUDINARY_IMG_FOLDER,
+//   "CLOUDINARY_IMG_FOLDER not set in .env"
+// );
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -12,35 +27,38 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const uploadImage = async (data: any) => {
-  const uploadPromise = new Promise<
-    UploadApiResponse | UploadApiErrorResponse | undefined
-  >(async (resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream(
-      { folder: process.env.CLOUDINARY_IMG_FOLDER },
-      (error, result) => {
-        if (error) {
-          reject(error);
-          return null;
+export const uploadImageToCloudinary = async (
+  data: AsyncIterable<Uint8Array>
+) => {
+  const uploadPromise = new Promise<UploadApiResponse | undefined>(
+    async (resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: process.env.CLOUDINARY_IMG_FOLDER,
+        },
+        (error, result) => {
+          if (error) {
+            reject(error);
+            return;
+          }
+          resolve(result);
         }
-        resolve(result);
-      }
-    );
-    await writeAsyncIterableToWritable(data, uploadStream);
-  });
+      );
+      await writeAsyncIterableToWritable(data, uploadStream);
+    }
+  );
 
   return uploadPromise;
 };
 
 export const uploadHandler = unstable_composeUploadHandlers(
-  async ({ name, data }) => {
-    if (name !== "img") {
+  async ({ name, contentType, data, filename }) => {
+    if (name !== "image") {
       return undefined;
     }
-    const uploadedImage = await uploadImage(data);
-
+    const uploadedImage = await uploadImageToCloudinary(data);
     return uploadedImage?.secure_url;
   },
-
+  // fallback to memory for everything else
   unstable_createMemoryUploadHandler()
 );

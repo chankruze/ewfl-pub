@@ -31,7 +31,7 @@ export default function RecyclePageLayout() {
   const { tickets } = useLoaderData<typeof loader>();
 
   return (
-    <div className="p-4 grid lg:grid-cols-3 place-items-center">
+    <div className="p-4 grid lg:grid-cols-3 place-items-center gap-4">
       {tickets.map((t) => (
         <TicketCard key={t.id} data={t} />
       ))}
