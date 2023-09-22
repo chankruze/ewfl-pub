@@ -1,4 +1,5 @@
 import { getAuth } from "@clerk/remix/ssr.server";
+import { Prisma } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import {
@@ -21,10 +22,25 @@ export const loader = async (args: LoaderFunctionArgs) => {
       },
     });
 
-    return json({ ticket });
-  } catch (error) {
-    console.error(error);
-    return json({ ticket: null });
+    if (ticket) return json({ ticket });
+
+    return redirect("..");
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.meta) {
+        throw new Response(e.meta?.message as string, {
+          status: 400,
+        });
+      } else {
+        throw new Response(e.message, {
+          status: 400,
+        });
+      }
+    }
+
+    throw new Response("error", {
+      status: 500,
+    });
   }
 };
 
@@ -43,8 +59,9 @@ export function ErrorBoundary() {
 
   if (isRouteErrorResponse(error)) {
     return (
-      <div>
-        <h1>
+      <div className="p-4 grid place-items-center space-y-3">
+        <Frown className="w-24 h-24 text-red-500" />
+        <h1 className="text-3xl font-bold">
           {error.status} - {error.statusText}
         </h1>
         <p>{error.data}</p>
@@ -55,7 +72,7 @@ export function ErrorBoundary() {
       <div className="p-4 grid place-items-center space-y-3">
         <Frown className="w-24 h-24 text-red-500" />
         <h1 className="text-3xl font-bold">Something went wrong</h1>
-        <p className="text-sm">{error.message}</p>
+        <p>{error.message}</p>
       </div>
     );
   } else {
