@@ -11,7 +11,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@clerk/remix": "3.0.0-snapshot.085c417",
+    "@clerk/remix": "^3.0.0",
     "@prisma/client": "5.3.1",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -32,7 +32,6 @@
     "isbot": "^3.6.8",
     "lucide-react": "^0.279.0",
     "nanoid": "^5.0.1",
-    "nprogress": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^1.14.0",

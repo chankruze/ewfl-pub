@@ -53,6 +53,7 @@ export const CreateTicketModal = () => {
               placeholder="i.e. Recycle ASUS TUF gaming laptop"
             />
             <ErrorMessage>
+              {/* @ts-ignore */}
               {fetcher.data?.error?.title?._errors[0]}
             </ErrorMessage>
           </div>
@@ -68,6 +69,7 @@ export const CreateTicketModal = () => {
               placeholder="i.e. The motherboard is busted, rest components are intact."
             />
             <ErrorMessage>
+              {/* @ts-ignore */}
               {fetcher.data?.error?.description?._errors[0]}
             </ErrorMessage>
           </div>
@@ -76,6 +78,7 @@ export const CreateTicketModal = () => {
             <Label htmlFor="image">Image</Label>
             <Input id="image" type="file" name="image" accept="image/*" />
             <ErrorMessage>
+              {/* @ts-ignore */}
               {fetcher.data?.error?.image?._errors[0]}
             </ErrorMessage>
           </div>

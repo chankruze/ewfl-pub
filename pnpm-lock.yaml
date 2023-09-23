@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@clerk/remix':
-    specifier: 3.0.0-snapshot.085c417
-    version: 3.0.0-snapshot.085c417(@remix-run/react@2.0.0)(@remix-run/server-runtime@2.0.0)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^3.0.0
+    version: 3.0.0(@remix-run/react@2.0.0)(@remix-run/server-runtime@2.0.0)(react-dom@18.2.0)(react@18.2.0)
   '@prisma/client':
     specifier: 5.3.1
     version: 5.3.1(prisma@5.3.1)
@@ -68,9 +68,6 @@ dependencies:
   nanoid:
     specifier: ^5.0.1
     version: 5.0.1
-  nprogress:
-    specifier: ^0.2.0
-    version: 0.2.0
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -547,11 +544,11 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@clerk/backend@0.29.1-snapshot.085c417:
-    resolution: {integrity: sha512-FARDS9nmAx226c6vrkA3mH67+2zPekGqgLoVhpXYiBa9w37tEuwb2SN9uyhfTbNcfPgEyszFr3vea2lkfHyLag==}
+  /@clerk/backend@0.29.2:
+    resolution: {integrity: sha512-7BJiQf7tRKuAq61o1LHMEeBkM8HW8HbjxE2bdSF/V2HdW6XlB+FNXFBFWscf5TCB8p5yJWpzTPmGuWT8GSMD+Q==}
     engines: {node: '>=14'}
     dependencies:
-      '@clerk/types': 3.52.0-snapshot.085c417
+      '@clerk/types': 3.52.0
       '@peculiar/webcrypto': 1.4.1
       '@types/node': 16.18.6
       cookie: 0.5.0
@@ -561,20 +558,20 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@clerk/clerk-react@4.25.0-snapshot.085c417(react@18.2.0):
-    resolution: {integrity: sha512-2KAI9nvPj5wbYsdmx1y6ZrsGROViVTF69qE6yUUcgiiGOQnZTmaAZYw5vpnBz8qzN8X1p1VBqRfCetaVXmVcbQ==}
+  /@clerk/clerk-react@4.25.1(react@18.2.0):
+    resolution: {integrity: sha512-+RtK6RNWVlT6jFeOlomi6PM2pDOETyi13zSKL/IgrJ68LV8qrtQikrP0n5v0i0YRDvpjB5lpBF0VgmpAJEGNxQ==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16'
     dependencies:
-      '@clerk/shared': 0.22.1-snapshot.085c417(react@18.2.0)
-      '@clerk/types': 3.52.0-snapshot.085c417
+      '@clerk/shared': 0.23.0(react@18.2.0)
+      '@clerk/types': 3.52.0
       react: 18.2.0
       tslib: 2.4.1
     dev: false
 
-  /@clerk/remix@3.0.0-snapshot.085c417(@remix-run/react@2.0.0)(@remix-run/server-runtime@2.0.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Dg3V04dbxykVWhYkCHyGAdreNdaIxAhEBhTOV4eY5JsOg/oXv2ZPLlUKQiTTpbMPiFQH7zamXljx1pjk/TKlPg==}
+  /@clerk/remix@3.0.0(@remix-run/react@2.0.0)(@remix-run/server-runtime@2.0.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-3gIy5uREc9WdL0SouF+mSW1NvkR/eI6FL/qLyCVBshQKShq9M6DZdXELQaDWXoLju0JfesUFeCpQ675li6vLpQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@remix-run/react': ^2.0.0
@@ -582,10 +579,10 @@ packages:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
     dependencies:
-      '@clerk/backend': 0.29.1-snapshot.085c417
-      '@clerk/clerk-react': 4.25.0-snapshot.085c417(react@18.2.0)
-      '@clerk/shared': 0.22.1-snapshot.085c417(react@18.2.0)
-      '@clerk/types': 3.52.0-snapshot.085c417
+      '@clerk/backend': 0.29.2
+      '@clerk/clerk-react': 4.25.1(react@18.2.0)
+      '@clerk/shared': 0.23.0(react@18.2.0)
+      '@clerk/types': 3.52.0
       '@remix-run/react': 2.0.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@remix-run/server-runtime': 2.0.0(typescript@5.2.2)
       cookie: 0.5.0
@@ -594,8 +591,8 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@clerk/shared@0.22.1-snapshot.085c417(react@18.2.0):
-    resolution: {integrity: sha512-JgzGH4OKZ01sJdE+XjhQPtWQvcghoJ37FcDub2uXwBvwQgcsfk9JtTciEGNwlh1qEIq10C6bJM0PkWANl+vLSg==}
+  /@clerk/shared@0.23.0(react@18.2.0):
+    resolution: {integrity: sha512-/1QPDnXexJCdND00hjgq7ATz35SY+oUVVWGEXjh/Gl+dQyXTeRZRsA5k6TCj+42A39j14xSgq6MQJHgbb7M6Jg==}
     peerDependencies:
       react: '>=16'
     dependencies:
@@ -605,8 +602,8 @@ packages:
       swr: 2.2.0(react@18.2.0)
     dev: false
 
-  /@clerk/types@3.52.0-snapshot.085c417:
-    resolution: {integrity: sha512-/cXDIYlpZmJf6Tr7tKoJL20IByAMPFLOuSG1PeofUuZPzzWOVEn16Dq9eGupmhcd3HovZLdguxnjsLU/MacMDw==}
+  /@clerk/types@3.52.0:
+    resolution: {integrity: sha512-AzPFyTcVdmMAEmP0Of2DzQ7M/XyBIYL5cNNKYaEZ+0f0T2xxFC4HIDIQqY1GjwDs6MBiHl2nPf2C06pQpOVWbQ==}
     engines: {node: '>=14'}
     dependencies:
       csstype: 3.1.1
@@ -5644,10 +5641,6 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
-
-  /nprogress@0.2.0:
-    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
-    dev: false
 
   /object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}

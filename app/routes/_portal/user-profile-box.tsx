@@ -39,7 +39,6 @@ export const UserProfileBox = ({ profile }: UserProfileBoxProps) => {
           className="line-clamp-1 flex cursor-pointer items-center gap-1.5 text-ellipsis rounded-2xl border border-accent/10 p-2"
           onClick={openProfile}
         >
-          {/* <UserButton /> */}
           <Avatar>
             <AvatarImage src={profile.avatar} alt={profile.name} />
             <AvatarFallback>{avatarTextFromName(profile.name)}</AvatarFallback>

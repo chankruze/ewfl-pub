@@ -10,5 +10,5 @@ export async function getCurrentUserProfile(args: LoaderFunctionArgs) {
     return _profile;
   }
 
-  redirect("/sign-in");
+  redirect(process.env.CLERK_SIGN_IN_URL as string);
 }

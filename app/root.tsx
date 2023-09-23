@@ -1,7 +1,7 @@
 import { ClerkApp, ClerkErrorBoundary } from "@clerk/remix";
 import { rootAuthLoader } from "@clerk/remix/ssr.server";
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { type LinksFunction, type LoaderFunctionArgs } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -10,11 +10,8 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
-  useNavigation,
   useRouteError,
 } from "@remix-run/react";
-import NProgress from "nprogress";
-import { useEffect } from "react";
 import stylesheet from "~/globals.css";
 
 export const links: LinksFunction = () => [
@@ -36,7 +33,7 @@ export const links: LinksFunction = () => [
 
 export const loader = (args: LoaderFunctionArgs) => rootAuthLoader(args);
 
-export function RootErrorBoundary() {
+const RootErrorBoundary = () => {
   const error = useRouteError();
 
   if (isRouteErrorResponse(error)) {
@@ -68,24 +65,9 @@ export function RootErrorBoundary() {
   } else {
     return <h1>Unknown Error</h1>;
   }
-}
-
-export const ErrorBoundary = ClerkErrorBoundary(RootErrorBoundary);
-
-// disbale the loading spinner of nprogress
-NProgress.configure({ showSpinner: false });
+};
 
 const App = () => {
-  const transition = useNavigation();
-
-  useEffect(() => {
-    // when the state is idle then we can to complete the progress bar
-    if (transition.state === "idle") NProgress.done();
-    // and when it's something else it means it's either submitting a form or
-    // waiting for the loaders of the next location so we start it
-    else NProgress.start();
-  }, [transition.state]);
-
   return (
     <html lang="en">
       <head>
@@ -103,5 +85,7 @@ const App = () => {
     </html>
   );
 };
+
+export const ErrorBoundary = ClerkErrorBoundary(RootErrorBoundary);
 
 export default ClerkApp(App);
