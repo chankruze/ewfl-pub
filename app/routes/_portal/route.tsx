@@ -54,7 +54,7 @@ export default function PanelLayout() {
         </div>
       </aside>
       {/* outlet */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto scrollbar-thin">
         <ModalProvider />
         <Outlet />
       </main>
