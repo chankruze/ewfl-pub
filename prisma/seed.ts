@@ -17,7 +17,7 @@ const task = async (facility: {
 }) => {
   try {
     const { name, location, address } = facility;
-    const facId = generateFacId();
+    const facId = await generateFacId();
     const email = generateEmailFromFacId(facId, "fac", "ewfl.gov.in");
     const managerEmail = generateEmailFromFacId(
       facId,
@@ -50,6 +50,7 @@ const task = async (facility: {
         },
       },
     });
+
     console.info(result);
   } catch (error) {
     console.error(error);

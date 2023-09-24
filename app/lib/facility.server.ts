@@ -1,8 +1,8 @@
 import { customAlphabet } from "nanoid";
 const nanoid = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 6);
 
-export const generateFacId = () => {
-  const code = nanoid();
+export const generateFacId = async () => {
+  const code = await nanoid();
   return `EWFL_FAC_${code}`;
 };
 

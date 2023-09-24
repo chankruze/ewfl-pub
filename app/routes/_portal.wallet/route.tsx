@@ -1,11 +1,23 @@
 import { getAuth } from "@clerk/remix/ssr.server";
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { PiggyBank, Upload } from "lucide-react";
+import { SITE_DESCRIPTION, SITE_TITLE } from "~/consts";
 import { getWalletByUserId } from "~/controllers/wallet.server";
 import { BalanceCard } from "./BalanceCard";
 import { WalletActionLink } from "./wallet-action-link";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: `Wallet / ${SITE_TITLE}` },
+    {
+      property: "og:title",
+      content: `Wallet / ${SITE_TITLE}`,
+    },
+    { name: "description", content: SITE_DESCRIPTION },
+  ];
+};
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const { userId } = await getAuth(args);

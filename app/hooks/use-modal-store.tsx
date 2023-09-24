@@ -1,8 +1,9 @@
 import { create } from "zustand";
 
-export type ModalType = "createTicket";
+export type ModalType = "createTicket" | "facilityPopoverModal";
 
 interface ModalData {
+  facilityId?: string;
   role?: string;
   apiUrl?: string;
   query?: Record<string, any>;

@@ -15,11 +15,22 @@ import {
   ScaleControl,
 } from "react-map-gl";
 import { LocationWidget } from "~/components/location-widget";
+import { Pin } from "~/components/pin";
 import { SITE_DESCRIPTION, SITE_TITLE } from "~/consts";
 import { useLocationStore } from "~/hooks/location-store";
 import { prisma } from "~/lib/db.server";
 import { FacilityCard } from "./facility-card";
-import { Pin } from "./pin";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: `Facilities / ${SITE_TITLE}` },
+    {
+      property: "og:title",
+      content: `Facilities / ${SITE_TITLE}`,
+    },
+    { name: "description", content: SITE_DESCRIPTION },
+  ];
+};
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const { userId } = await getAuth(args);
@@ -40,21 +51,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
   });
 };
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: `Explore / ${SITE_TITLE}` },
-    {
-      property: "og:title",
-      content: `Explore / ${SITE_TITLE}`,
-    },
-    {
-      name: "description",
-      content: SITE_DESCRIPTION,
-    },
-  ];
-};
-
-export default function ExplorePage() {
+export default function FacilitiesMapPage() {
   const { MAPBOX_API_KEY, facilities } = useLoaderData<typeof loader>();
   const { location } = useLocationStore();
   const [selectedFacility, setselectedFacility] = useState<Facility | null>();

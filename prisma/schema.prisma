@@ -33,9 +33,9 @@ model UserProfile {
 model UserWallet {
   id           String            @id @default(auto()) @map("_id") @db.ObjectId
   currency     Currency          @default(INR)
-  earned       Float             @default(0)
+  earned       Float             @default(99)
   withdrawn    Float             @default(0)
-  referrals    Float             @default(0)
+  referred     Float             @default(0)
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
   // no profile relation scalar - must be optional
@@ -79,6 +79,16 @@ enum TicketStatus {
   DONE
 }
 
+type Parts {
+  name     String
+  value    Float
+  quantity Int
+}
+
+type Reward {
+  parts Parts[]
+}
+
 model Ticket {
   id            String       @id @default(auto()) @map("_id") @db.ObjectId
   tktId         String       @unique
@@ -86,6 +96,7 @@ model Ticket {
   title         String
   description   String       @default("")
   image         String
+  reward        Reward? // set nullable for now, TODO: fix this
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   // profile relation
