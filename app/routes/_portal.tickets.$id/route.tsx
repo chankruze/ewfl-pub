@@ -73,43 +73,43 @@ export default function RecycleTicketPageLayout() {
   const { ticket } = useLoaderData<typeof loader>();
 
   return (
-    <div className="h-full w-full space-y-4 p-4">
-      <div className="flex gap-2 flex-wrap items-center justify-between">
-        <h1 className="text-lg font-semibold text-blue-500">{ticket.tktId}</h1>
+    <div className="p-4 grid lg:grid-cols-2 gap-4">
+      <div className="space-y-4 p-2 sm:p-4 row-start-2 lg:row-start-1">
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <h1 className="text-lg font-semibold text-blue-500">
+            {ticket.tktId}
+          </h1>
+          <div className="flex items-center gap-1">
+            <Badge variant="destructive">{ticket.status}</Badge>
+            <Badge>
+              {format(new Date(ticket.createdAt), "dd MMM yyyy hh:ss a")}
+            </Badge>
+          </div>
+        </div>
+        <div className="space-y-2">
+          <p className="text-xl sm:text-2xl font-bold capitalize">
+            {ticket.title}
+          </p>
+          <p className="font-roboto">{ticket.description}</p>
+        </div>
         <div className="flex items-center gap-2">
-          <Badge>{ticket.status}</Badge>
-          <Badge>
-            {format(new Date(ticket.createdAt), "dd MMM yyyy hh:ss a")}
-          </Badge>
+          <p className="font-medium">Booked facility: </p>
+          <Link
+            to={`/facilities/${ticket.facilityId}`}
+            className="flex items-center gap-1 underline text-yellow-500"
+          >
+            {ticket.facility.name} <ExternalLink className="w-4 h-4" />
+          </Link>
         </div>
+        <RewardsAlert />
       </div>
-      <div className="grid lg:grid-cols-2 gap-4">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <p className="text-xl sm:text-2xl font-bold capitalize">
-              {ticket.title}
-            </p>
-            <p className="font-roboto">{ticket.description}</p>
-            <div className="flex items-center gap-2">
-              <p className="font-medium">Booked facility: </p>
-              <Link
-                to={`/facilities/${ticket.facilityId}`}
-                className="flex items-center gap-1 underline text-yellow-500"
-              >
-                {ticket.facility.name} <ExternalLink className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="">
-            <RewardsAlert />
-          </div>
-        </div>
+      <div className="space-y-2 p-2 sm:p-4">
         <div className="w-full h-full grid lg:grid-cols-2 bg-red-300">
           <img
             src={ticket.image}
             alt="Damaged product"
             className="lg:col-span-2 w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
       </div>

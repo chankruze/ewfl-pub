@@ -4,6 +4,7 @@ import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { SITE_DESCRIPTION, SITE_TITLE } from "~/consts";
 import { prisma } from "~/lib/db.server";
+import { NoTickets } from "./no-tickets";
 import { TicketCard } from "./ticket-card";
 
 export const meta: MetaFunction = () => {
@@ -39,11 +40,18 @@ export const loader = async (args: LoaderFunctionArgs) => {
   }
 };
 
-export default function RecyclePageLayout() {
+export default function TicketsIndexPage() {
   const { tickets } = useLoaderData<typeof loader>();
 
+  if (!tickets)
+    return (
+      <div className="p-6 grid place-items-center">
+        <NoTickets />
+      </div>
+    );
+
   return (
-    <div className="p-4 grid lg:grid-cols-3 place-items-center gap-4">
+    <div className="p-4 sm:p-6 grid lg:grid-cols-3 place-items-center gap-4">
       {tickets.map((t) => (
         <TicketCard key={t.id} data={t} />
       ))}
