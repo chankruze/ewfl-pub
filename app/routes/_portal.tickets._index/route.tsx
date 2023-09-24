@@ -12,7 +12,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
   try {
     // fetch all tickets of user
-    const tickets = await prisma.recyleTicket.findMany({
+    const tickets = await prisma.ticket.findMany({
       where: {
         userProfile: {
           userId,

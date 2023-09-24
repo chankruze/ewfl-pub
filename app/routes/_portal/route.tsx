@@ -2,7 +2,7 @@ import { getAuth } from "@clerk/remix/ssr.server";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { SITE_TITLE } from "~/consts";
+import { SIDE_NAV_TITLE } from "~/consts";
 import { getOnboardingProfile } from "~/lib/initial-profile";
 import { InitialProfileModal } from "~/modals/initial-profile-modal";
 import { ModalProvider } from "~/providers/modal-provider";
@@ -35,7 +35,7 @@ export default function PanelLayout() {
       <aside className="hidden flex-col gap-6 bg-primary p-4 text-primary-foreground sm:flex lg:w-1/6">
         {/* brand */}
         <h1 className="py-6 text-center font-montserrat font-semibold uppercase text-yellow-400 lg:text-3xl">
-          {SITE_TITLE}
+          {SIDE_NAV_TITLE}
         </h1>
         {/* nav links */}
         <nav className="flex-1">

@@ -35,7 +35,8 @@ const ticketSchema = z.object({
 
 export const createRecycleTicket = async (
   data: FormData,
-  userId: string
+  userId: string,
+  facilityId: string
 ): Promise<any> => {
   const _validation = ticketSchema.safeParse(formToJSON(data));
 
@@ -44,12 +45,17 @@ export const createRecycleTicket = async (
     const tktId = generateTicketId();
 
     try {
-      return await prisma.recyleTicket.create({
+      return await prisma.ticket.create({
         data: {
           title,
           description,
           image,
           tktId,
+          facility: {
+            connect: {
+              id: facilityId,
+            },
+          },
           userProfile: {
             connect: {
               userId,

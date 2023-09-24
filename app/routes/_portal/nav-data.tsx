@@ -1,4 +1,4 @@
-import { Compass, Home, Recycle, Wallet } from "lucide-react";
+import { Factory, Home, Recycle, Wallet } from "lucide-react";
 import type { BottomNavItemProps } from "./bottom-nav-item";
 import type { NavItemProps } from "./nav-item";
 
@@ -11,14 +11,14 @@ export const navLinks: NavLinkType[] = [
     icon: Home,
   },
   {
-    to: "recycle",
-    label: "Recycle",
-    icon: Recycle,
+    to: "facilities",
+    label: "Facilities",
+    icon: Factory,
   },
   {
-    to: "explore",
-    label: "Explore",
-    icon: Compass,
+    to: "tickets",
+    label: "Tickets",
+    icon: Recycle,
   },
   {
     to: "wallet",

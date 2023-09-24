@@ -6,25 +6,26 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider     = "mongodb"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model UserProfile {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String         @unique
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String     @unique
   name          String
   email         String
   phone         String?
   avatar        String
-  isReferred    Boolean        @default(false)
+  isReferred    Boolean    @default(false)
   referredBy    String?
-  referralCount Int            @default(0)
-  referralCode  String         @unique
+  referralCount Int        @default(0)
+  referralCode  String     @unique
   // wallet relation (one to one) - mandatory
-  wallet        UserWallet     @relation(fields: [walletId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  walletId      String         @unique @map("wallet") @db.ObjectId
-  RecyleTicket  RecyleTicket[]
+  wallet        UserWallet @relation(fields: [walletId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  walletId      String     @unique @db.ObjectId
+  tickets       Ticket[]
 
   @@map("user_profiles")
 }
@@ -66,30 +67,90 @@ model UserTransaction {
   updatedAt   DateTime            @updatedAt
   // wallet relation scalar - mandatory
   wallet      UserWallet          @relation(fields: [walletId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  walletId    String              @map("wallet") @db.ObjectId
+  walletId    String              @unique @db.ObjectId
 
   @@map("user_transactions")
 }
 
-enum RecyleTicketStatus {
+enum TicketStatus {
   OPEN
   REJECTED
   APPROVED
   DONE
 }
 
-model RecyleTicket {
-  id            String             @id @default(auto()) @map("_id") @db.ObjectId
-  tktId         String             @unique
-  status        RecyleTicketStatus @default(OPEN)
+model Ticket {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  tktId         String       @unique
+  status        TicketStatus @default(OPEN)
   title         String
-  description   String             @default("")
+  description   String       @default("")
   image         String
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   // profile relation
-  userProfile   UserProfile?       @relation(fields: [userProfileId], references: [id])
-  userProfileId String?            @map("userProfile") @db.ObjectId
+  userProfile   UserProfile  @relation(fields: [userProfileId], references: [id])
+  userProfileId String       @db.ObjectId
+  // facility relation
+  facility      Facility     @relation(fields: [facilityId], references: [id])
+  facilityId    String       @db.ObjectId
 
-  @@map("recycle_tickets")
+  @@map("tickets")
+}
+
+type GeoJSONPoint {
+  type        String  @default("Point")
+  coordinates Float[]
+}
+
+model Facility {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  facId         String         @unique
+  name          String
+  email         String
+  image         String
+  address       String
+  location      GeoJSONPoint
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  // relation with FacilityUser model
+  facilityUsers FacilityUser[]
+  // relation with Tickets
+  tickets       Ticket[]
+
+  @@map("facilities")
+}
+
+// create a 2dsphere index on facility with field location
+// db.collection.createIndex( { <location field> : "2dsphere" } )
+
+enum Role {
+  MANAGER
+  STAFF
+}
+
+model FacilityUser {
+  id         String                @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  email      String                @unique
+  role       Role                  @default(STAFF)
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @updatedAt
+  facility   Facility              @relation(fields: [facilityId], references: [id])
+  facilityId String                @unique @db.ObjectId
+  // relation with FacilityUserPassword model
+  password   FacilityUserPassword?
+
+  @@map("facility_users")
+}
+
+model FacilityUserPassword {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  hash           String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  facilityUser   FacilityUser @relation(fields: [facilityUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  facilityUserId String       @unique @db.ObjectId
+
+  @@map("facility_user_passwords")
 }

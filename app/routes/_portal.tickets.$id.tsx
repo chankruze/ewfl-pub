@@ -3,9 +3,9 @@ import { Prisma } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import {
-    isRouteErrorResponse,
-    useLoaderData,
-    useRouteError,
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import { Frown } from "lucide-react";
 import { prisma } from "~/lib/db.server";
@@ -16,7 +16,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
   if (!userId) return redirect("/sign-in");
 
   try {
-    const ticket = await prisma.recyleTicket.findUnique({
+    const ticket = await prisma.ticket.findUnique({
       where: {
         id: args.params.id,
       },
