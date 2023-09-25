@@ -26,7 +26,7 @@ export const FacilityCard = ({ facility }: FacilityCardProps) => {
   const navigate = useNavigate();
 
   return (
-    <Card className="w-[300px] border-none p-0 rounded-none">
+    <Card className="w-[250px] border-none p-0 rounded-none">
       <CardHeader className="p-2">
         <CardTitle className="text-xl">{facility.name}</CardTitle>
         <CardDescription className="text-sm">{facility.address}</CardDescription>
@@ -34,7 +34,7 @@ export const FacilityCard = ({ facility }: FacilityCardProps) => {
       <CardContent className="p-2">
         <img
           src={facility.image}
-          className="w-full max-h-48 object-cover"
+          className="w-full max-h-32 object-cover"
           alt={facility.name}
         />
       </CardContent>

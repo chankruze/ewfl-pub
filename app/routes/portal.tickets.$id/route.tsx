@@ -95,7 +95,7 @@ export default function RecycleTicketPageLayout() {
         <div className="flex items-center gap-2">
           <p className="font-medium">Booked facility: </p>
           <Link
-            to={`/facilities/${ticket.facilityId}`}
+            to={`/portal/facilities/${ticket.facilityId}`}
             className="flex items-center gap-1 underline text-yellow-500"
           >
             {ticket.facility.name} <ExternalLink className="w-4 h-4" />

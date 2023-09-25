@@ -127,7 +127,7 @@ export default function FacilityTicketBookingPage() {
 
   const busy = state === "submitting";
 
-  const goToFacilities = () => navigate("/facilities");
+  const goToFacilities = () => navigate("/portal/facilities");
 
   return (
     <div className="flex flex-col h-full w-full">

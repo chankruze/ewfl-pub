@@ -7,7 +7,7 @@ type NavLinkType = NavItemProps & BottomNavItemProps;
 export const navLinks: NavLinkType[] = [
   {
     to: ".",
-    label: "Home",
+    label: "Portal",
     icon: Home,
   },
   {

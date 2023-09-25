@@ -9,10 +9,10 @@ import { TicketCard } from "./ticket-card";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: `Tcikets / ${SITE_TITLE}` },
+    { title: `Tickets / ${SITE_TITLE}` },
     {
       property: "og:title",
-      content: `Tcikets / ${SITE_TITLE}`,
+      content: `Tickets / ${SITE_TITLE}`,
     },
     { name: "description", content: SITE_DESCRIPTION },
   ];

@@ -70,8 +70,8 @@ export default function WalletLayout() {
         />
         {/* referral card */}
         <BalanceCard
-          label="Referrals"
-          link="referrals"
+          label="Referred"
+          link="referred"
           balance={wallet.referred.toFixed(2)}
           currency={wallet.currency}
         />
