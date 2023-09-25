@@ -83,7 +83,7 @@ export default function LandingPage() {
               <ArrowUpRight />
             </p>
             <Link to="portal">
-              <p className="font-medium underline">Request a call</p>
+              <p className="font-medium underline hover:text-yellow-400">Get started</p>
             </Link>
           </div>
         </Fade>

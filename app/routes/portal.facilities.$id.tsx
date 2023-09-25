@@ -55,7 +55,7 @@ export const action = async (args: ActionFunctionArgs) => {
         const facilityId = formData.get("facilityId") as string;
         const _ticket = await createRecycleTicket(formData, userId, facilityId);
 
-        if (_ticket.id) return redirect(`/tickets/${_ticket.id}`);
+        if (_ticket.id) return redirect(`/portal/tickets/${_ticket.id}`);
 
         return json({
           ok: false,

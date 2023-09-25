@@ -6,7 +6,6 @@ import { getOnboardingProfile } from "~/lib/initial-profile";
 import { InitialProfileModal } from "~/modals/initial-profile-modal";
 import { ModalProvider } from "~/providers/modal-provider";
 import { BottomNavList } from "./bottom-nav-list";
-import { KnowledgePopup } from "./knowledge-popup";
 import logo from "./logo.png";
 import { NavList } from "./nav-list";
 import { UserProfileBox } from "./user-profile-box";
@@ -25,17 +24,17 @@ export const loader = async (args: LoaderFunctionArgs) => {
   );
 
   // get all facts
-  const facts = await response.json();
+  // const facts = await response.json();
   // pick a random fact
-  const fact = facts[Math.ceil(Math.random() * facts.length)];
+  // const fact = facts[Math.ceil(Math.random() * facts.length)];
 
-  return json({ profile, fact });
+  return json({ profile });
 };
 
 export const action = async (args: ActionFunctionArgs) => {};
 
 export default function PanelLayout() {
-  const { profile, fact } = useLoaderData<typeof loader>();
+  const { profile } = useLoaderData<typeof loader>();
 
   // TODO: implement initial create profile modal if new-user
   if (!profile) return <InitialProfileModal />;
@@ -55,9 +54,9 @@ export default function PanelLayout() {
         <nav className="p-4 flex-1">
           <NavList />
         </nav>
-        <div className="p-4">
+        {/* <div className="p-4">
           <KnowledgePopup data={fact.fact} />
-        </div>
+        </div> */}
         {/* user details */}
         <div className="p-4">
           <UserProfileBox
