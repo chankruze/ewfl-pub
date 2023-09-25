@@ -1,3 +1,3 @@
 export default function WalletPage() {
-  return <div>WalletPage</div>;
+  return <div></div>;
 }

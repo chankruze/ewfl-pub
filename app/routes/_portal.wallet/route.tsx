@@ -26,8 +26,10 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
   const _wallet = await getWalletByUserId(userId);
 
+  console.log({ _wallet });
+
   if (_wallet) {
-    const total = _wallet.earned + _wallet.referrals - _wallet.withdrawn;
+    const total = _wallet.earned + _wallet.referred - _wallet.withdrawn;
 
     return json({
       ..._wallet,
@@ -70,7 +72,7 @@ export default function WalletLayout() {
         <BalanceCard
           label="Referrals"
           link="referrals"
-          balance={wallet.referrals.toFixed(2)}
+          balance={wallet.referred.toFixed(2)}
           currency={wallet.currency}
         />
         {/* withdrawn card */}

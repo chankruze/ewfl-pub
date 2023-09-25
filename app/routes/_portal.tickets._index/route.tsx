@@ -43,7 +43,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
 export default function TicketsIndexPage() {
   const { tickets } = useLoaderData<typeof loader>();
 
-  if (!tickets)
+  if (!tickets.length)
     return (
       <div className="p-6 grid place-items-center">
         <NoTickets />
